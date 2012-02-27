@@ -9,6 +9,22 @@ AM_GPU_FUNCTION Real test::response(Real d_Gy)
 	return m_ * d_Gy + c_;
 }
 
+Real AM_GPU_FUNCTION general_target::response(Real d_Gy)
+{
+	// TODO(robryk): gamma function
+	//double tmp = gsl_sf_gamma_inc_P(c, d_Gy/D1);
+	double tmp = 0.0;
+	tmp = pow(tmp, m_) * k;
+	return tmp;
+}
+
+Real AM_GPU_FUNCTION general_target::lethal_events_response(Real d_Gy)
+{
+	Real resp = respose(d_Gy);
+	assert(resp < 1.0);
+	return -1.0 * log(1.0 - resp);
+}
+
 AM_GPU_FUNCTION radioluminescence::radioluminescence(Real Smax,
 													 Real chi,
 													 Real D1) :

@@ -4,6 +4,8 @@ namespace amtrack {
 namespace material {
 
 class material {
+	private:
+
 };
 
 }

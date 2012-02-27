@@ -5,11 +5,11 @@ namespace radial_dose_distribution {
  * Parameters common to all RDDs.
  */
 struct common_parameters {
-	Real max_electron_range_; // [m]
-	Real LET_; // [MeV?cm2?g] TODO(robryk): /cm2/g or /cm2*g?
-	Real E_; // [MeV/u]
-	particle particle_;
-	material material_;
+	Real max_electron_range; // [m]
+	Real LET; // [MeV?cm2?g] TODO(robryk): /cm2/g or /cm2*g?
+	Real E; // [MeV/u]
+	particle particle;
+	material material;
 	// er_model?
 };
 
@@ -74,9 +74,27 @@ class cucinotta_point {
 /*
  * Katz Extended Target
  */
-class katz_extended_target {
+template<typename er_model> class katz_extended_target {
 	private:
-		Real katz_point_r_min_m_, a0_m_, d_min_Gy_;
+		parameters parameters_;
+		common_parameters common_parameters_;
+		er_model er_model_;
+		Real a0_m_;
+		Real katz_point_r_min_m_;
+		Real max_electron_range_m_;
+		Real alpha_;
+		Real katz_plateau_Gy_;
+		Real katz_point_coeff_Gy_;
+	public:
+		struct parameters {
+			Real katz_point_r_min_m_, a0_m_, d_min_Gy_;
+		};
+		AM_GPU_FUNCTION katz_extended_target
+			(const parameters& parameters,
+			 const common_parameters& common_parameters)
+			: er_model_(common_parameters.E_MeV_u, common_parameters.material)
+		{
+		}
 };
 
 /*
@@ -84,6 +102,12 @@ class katz_extended_target {
  */
 class cucinotta_extended_target {
 	private:
-		Real cucinotta_point_r_min_m_, a0_m_, d_min_Gy_;
+		parameters parameters_;
+		common_parameters common_parameters_;
+	public:
+		struct parameters {
+			Real cucinotta_point_r_min_m_, a0_m_, d_min_Gy_;
+		};
+		
 };
 

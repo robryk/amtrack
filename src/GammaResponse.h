@@ -19,8 +19,21 @@ class test {
 
 /*
  * General multi-hit, multi-target model
- * TODO(robryk): When a way to pass arrays to GPU is settled
+ * TODO(robryk): When a way to pass arrays to GPU is settled, add multi-targetedness
  */
+class general_target {
+	private:
+		double k_, D1_, c_, m_;
+	public:
+		AM_GPU_FUNCTION general_target(double k, double D1, double c, double m) :
+			k_(k), D1_(D1), c_(c), m_(m)
+		{
+			assert(D1 > 0.0);
+			assert(c > 0.0);
+		}
+		Real AM_GPU_FUNCTION response(Real d_Gy);
+		Real AM_GPU_FUNCTION lethal_events_response(Real d_Gy);
+};
 
 /*
  * Radioluminescence accumulated counts model

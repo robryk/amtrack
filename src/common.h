@@ -25,5 +25,7 @@ template<typename T> inline T square(T v)
 
 typedef double Real;
 
+#include "Constants.h"
+
 #endif
 
