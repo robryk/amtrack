@@ -1,5 +1,8 @@
 #include "GammaResponse.h"
+#include "Math.h"
 #include "common.h"
+
+using amtrack::math::gammp;
 
 namespace amtrack {
 namespace gamma_response {
@@ -11,9 +14,7 @@ AM_GPU_FUNCTION Real test::response(Real d_Gy)
 
 Real AM_GPU_FUNCTION general_target::response(Real d_Gy)
 {
-	// TODO(robryk): gamma function
-	//double tmp = gsl_sf_gamma_inc_P(c, d_Gy/D1);
-	double tmp = 0.0;
+	double tmp = gammp(c, d_Gy/D1);
 	tmp = pow(tmp, m_) * k;
 	return tmp;
 }
