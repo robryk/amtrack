@@ -21,6 +21,7 @@ const double atomic_mass_unit_MeV_c2 = 931.494028;
 	 */
 const double proton_mass_MeV_c2 = 938.272013;
 
+const double Avogadro_constant = 6.02214179e23;
 
 inline Real beta_from_E(Real E_MeV_u);
 inline Real gamma_from_E(Real E_MeV_u);
