@@ -6,38 +6,45 @@
 namespace amtrack {
 namespace electron_range {
 
-/*
- * class er_model {
- *   public:
- *     max_electron_range()
- *     average(r_min, r_max)
- *     er_model(E_MeV_u, material)
- * };
- */
+namespace internal {
 
-class tabata {
+Real AM_GPU_FUNCTION butts_katz_range_g_cm2(Real E_MeV_u, material mat);
+Real AM_GPU_FUNCTION waligorski_range_g_cm2(Real E_MeV_u, material mat);
+Real AM_GPU_FUNCTION edmund_range_g_cm2(Real E_MeV_u, material mat);
+Real AM_GPU_FUNCTION geiss_range_g_cm2(Real E_MeV_u, material mat);
+Real AM_GPU_FUNCTION scholz_range_g_cm2(Real E_MeV_u, material mat);
+Real AM_GPU_FUNCTION tabata_range_g_cm2(Real E_MeV_u, material mat);
+
+template<Real (*Range_g_cm2)(Real, material)> model {
 	private:
-		Real a1_g_cm2_, a2_, a3_, a4_, a5_;
-		Real beta_;
 		Real max_electron_range_m_;
-		static const double k_b1_g_cm2 = 0.2335;
-		static const double k_b2 = 1.209;
-		static const double k_b3 = 1.78e-4;
-		static const double k_b4 = 0.9891;
-		static const double k_b5 = 3.01e-4;
-		static const double k_b6 = 1.468;
-		static const double k_b7 = 1.18e-2;
-		static const double k_b8 = 1.232;
-		static const double k_b9 = 0.109;
 	public:
-		AM_GPU_FUNCTION tabata(Real E_MeV_u, material mat);
-		AM_GPU_FUNCTION Real max_electron_range_m()
+		AM_GPU_FUNCTION model(Real E_MeV_u, material mat)
+			: max_electron_range_m_(Range_g_cm2(E_MeV_u, mat) / mat.density())
 		{
-			return max_electron_range_m_;
 		}
 };
 
-class butts_katz {
+}
+
+using namespace internal;
+
+class butts_katz : public model<butts_katz_range_g_cm2> {
+};
+
+class waligorski : public model<waligorski_range_g_cm2> {
+};
+
+class edmund : public model<edmund_range_g_cm2> {
+};
+
+class geiss : public model<geiss_range_g_cm2> {
+};
+
+class scholz : public model<scholz_range_g_cm2> {
+};
+
+class tabata : public model<tabata_range_g_cm2> {
 };
 
 template<typename er_model> Real single_impact_fluence_cm2(Real E_MeV_u, material mat)
