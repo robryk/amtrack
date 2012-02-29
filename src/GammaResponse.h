@@ -66,9 +66,10 @@ class radioluminescence {
 class linear_quadratic {
 	private:
 		Real alpha_, beta_, D0_;
+		Real cached_lin_coeff_;
 	public:
 		AM_GPU_FUNCTION linear_quadratic(Real alpha, Real beta, Real D0) :
-			alpha_(alpha), beta_(beta), D0_(D0)
+			alpha_(alpha), beta_(beta), D0_(D0), cached_lin_coeff_(alpha_ + 2.0 * beta_ * D0_)
 		{
 			assert(alpha > 0.0);
 			assert(beta >= 0.0);
