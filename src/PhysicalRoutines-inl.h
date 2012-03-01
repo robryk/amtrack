@@ -21,7 +21,6 @@ inline Real gamma_from_E(Real E_MeV_u)
 	return 1.0 / sqrt(1.0 - square(beta_from_E(E_MeV_u)));
 }
 
-// TODO(robryk): Is the argument mislabeled? This gets passed a beta value.
 inline Real mass_correction_terms(Real E_MeV_u)
 {
 	Real gamma = gamma_from_E(E_MeV_u);
