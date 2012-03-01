@@ -2,6 +2,7 @@
 #define _AMTRACK__MATERIAL_GUARD
 
 #include "common.h"
+#include <string>
 
 namespace amtrack {
 namespace material {
@@ -10,12 +11,12 @@ class phases {
 	public:
 		enum e {
 			undefined,
-			consensed,
+			condensed,
 			gaseous
 		};
 };
 
-class material {
+class material_data {
 	private:
 		/** Phase */ /* TODO(robryk): Do we need phase_undefined at all? */
 		phases::e phase_;
@@ -37,7 +38,7 @@ class material {
 		Real average_Z() const { return average_Z_; }
 		/** Returns average mass number weighted with mass TODO(robryk): Mass number or atomic mass? */
 		Real average_A() const { return average_A_; }
-		material(phases::e phase, Real density, Real I, Real average_Z,
+		material_data(phases::e phase, Real density, Real I, Real average_Z,
 		         Real average_A)
 			: phase_(phase), density_(density), I_(I), average_Z_(average_Z),
 			  average_A_(average_A)
@@ -50,6 +51,14 @@ class material {
 			assert(average_Z_ > 0.0);
 			assert(average_A_ > 0.0);
 		}
+};
+
+class material {
+	private:
+		material_data material_data_;
+		std::string name;
+	public:
+		operator const material_data&() const { return material_data_; }
 };
 
 }
