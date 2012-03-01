@@ -9,9 +9,9 @@ namespace material {
 class phases {
 	public:
 		enum e {
-			phase_undefined,
-			phase_consensed,
-			phase_gaseous
+			undefined,
+			consensed,
+			gaseous
 		};
 };
 
