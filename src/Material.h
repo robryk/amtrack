@@ -37,6 +37,19 @@ class material {
 		Real average_Z() const { return average_Z_; }
 		/** Returns average mass number weighted with mass TODO(robryk): Mass number or atomic mass? */
 		Real average_A() const { return average_A_; }
+		material(phases::e phase, Real density, Real I, Real average_Z,
+		         Real average_A)
+			: phase_(phase), density_(density), I_(I), average_Z_(average_Z),
+			  average_A_(average_A)
+		{
+			assert(phase_ == phases::undefined ||
+			       phase_ == phases::condensed ||
+			       phase_ == phases::gaseous);
+			assert(density_ > 0.0);
+			// TODO(robryk): Asserts on I
+			assert(average_Z_ > 0.0);
+			assert(average_A_ > 0.0);
+		}
 };
 
 }
