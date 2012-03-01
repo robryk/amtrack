@@ -39,7 +39,7 @@ class particle {
 			: Z_(Z), A_(A), atomic_weight_(atomic_weight), density_(density), I_(I)
 		{
 			assert(Z > 0);
-			assert(A > Z);
+			assert(A >= Z);
 			assert(atomic_weight > 0.0);
 		}
 		
