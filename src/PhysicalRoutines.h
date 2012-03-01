@@ -29,6 +29,8 @@ inline Real gamma_from_E(Real E_MeV_u);
 inline Real mass_correction_terms(Real E_MeV_u);
 // TODO(robryk): Description
 inline Real max_relativistic_energy_transfer(Real E_MeV_u);
+// TODO(robryk): Description
+inline Real effective_charge_from_beta(Real beta, int Z);
 
 }
 }

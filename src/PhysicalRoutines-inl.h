@@ -36,6 +36,11 @@ inline Real max_relativistic_energy_transfer(Real E_MeV_u)
 	return (2.0 * electron_mass_MeV_c2 * square(beta) / (1.0 - square(beta))) / mass_correction_terms;
 }
 
+inline Real effective_charge_from_beta(Real beta, int Z)
+{
+	return static_cast<double>(Z) * (1.0 - exp(-125.0 * beta / (pow(Z, 2.0/3.0))));
+}
+
 }
 }
 
