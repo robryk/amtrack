@@ -110,20 +110,19 @@ namespace units {
 }
 
 namespace boxed_reals {
-class length_boxed_real;
 struct length_t : public tag {
-	typedef length_boxed_real base_type;
+	class base_type : public boxed_real_base {
+		public:
+			Real m() const { return 0.01*v_; }
+			Real cm() const { return v_; }
+			base_type(Real v, units::m_tag) : boxed_real_base(0.01*v) { }
+			base_type(Real v, units::cm_tag) : boxed_real_base(v) { }
+			// TODO(robryk): This is necessary for arith. Find a way to hide it.
+			base_type(Real v) : boxed_real_base(v) { }
+	};
+
 	struct allow_sum_diff { };
 	struct allow_mul_div_scalar { };
-};
-class length_boxed_real : public boxed_real_base {
-	public:
-		Real m() const { return 0.01*v_; }
-		Real cm() const { return v_; }
-		length_boxed_real(Real v, units::m_tag) : boxed_real_base(0.01*v) { }
-		length_boxed_real(Real v, units::cm_tag) : boxed_real_base(0.01*v) { }
-		// TODO(robryk): This is necessary for arith. Find a way to hide it.
-		length_boxed_real(Real v) : boxed_real_base(v) { }
 };
 }
 
